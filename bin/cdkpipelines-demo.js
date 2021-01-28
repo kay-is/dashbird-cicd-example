@@ -1,7 +1,17 @@
 #!/usr/bin/env node
+const { App } = require("@aws-cdk/core");
+const {
+  CdkpipelinesDemoPipelineStack,
+} = require("../lib/cdkpipelines-demo-pipeline-stack");
+const credentials = require("../credentials.json");
 
-const cdk = require('@aws-cdk/core');
-const { CdkpipelinesDemoStack } = require('../lib/cdkpipelines-demo-stack');
+const app = new App();
 
-const app = new cdk.App();
-new CdkpipelinesDemoStack(app, 'CdkpipelinesDemoStack');
+new CdkpipelinesDemoPipelineStack(app, "CdkpipelinesDemoPipelineStack", {
+  env: {
+    account: credentials.aws.account,
+    region: credentials.aws.region,
+  },
+});
+
+app.synth();
